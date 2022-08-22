@@ -1,0 +1,279 @@
+<head>
+  <!-- <link 
+  href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.css" 
+  rel="stylesheet"  type='text/css'>
+  <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet"> -->
+</head>
+             <div style="margin-left: -5%;margin-top:-5%">  <span> <h5><app-customers style="text-transform: uppercase;font-size: 110%;"></app-customers> APPOINTMENTS </h5>
+              <a style="margin-left: 85%;" routerLink="/portal/appoints" (click)="open(content)"><i class="fa fa-plus" title="Edit"></i> add appointment</a></span>
+                
+              <span style="margin-top: -5%;"></span>
+                <div class="table-responsive custom-table-responsive">
+          
+                  <table class="table custom-table">
+                    <thead>
+                      <tr>  
+          
+                        <th scope="col">
+                          <label class="control control--checkbox">
+                            <input type="checkbox"  class="js-check-all"/>
+                            <div class="control__indicator"></div>
+                          </label>
+                        </th>
+                        
+                        <th scope="col">Description</th>
+                        <th scope="col">Service Type</th>
+                        <th scope="col">Date</th>
+                        <th scope="col">Time</th>
+                        <th scope="col">Barber</th>
+                      </tr>
+                    </thead>
+                    <tbody *ngFor="let appointments of appointment">
+                      <tr scope="row" >
+                        <th scope="row">
+                          <label class="control control--checkbox">
+                            <input type="checkbox" class="js-check-all"/>
+                            <div class="control__indicator"></div>
+                          </label>
+                        </th>
+                        <td>
+                          {{appointments.description}}
+                        </td>
+                        <td>                {{appointments.serviceType}} <small class="d-block">{{appointments.description}}</small></td>
+                        
+                        <td>
+                          {{appointments.appointDate}}
+                        </td>
+                        <td>                {{appointments.appointTime}}</td>
+                        <td>                {{appointments.barberId}}</td>
+                        
+                    <td><a (click)="[open2(updateModal,appointments)]" href="/portal/editAppoint/{{appointments.appointmentId}}" class="nav-link bg-info rounded" style="padding: 2px;width:65px;text-align: center;">edit</a></td>
+                    <td><a (click)="[open1(delete1,appointments)]"  routerLink="/portal/apps/{{appointments.appointmentId}}" class="nav-link bg-danger rounded" style="padding: 2px;width:65px;text-align: center;">cancel</a></td>
+
+                    <!-- <td><form action="portal/editAppoint/{{appointments.appointmentId}}"><button class="btn btn-lg btn-outline-primary" (click)="open(content)">edit</button></form>
+                    </td>
+                    <td><button class="btn btn-lg btn-outline-primary" (click)="open(content)">cancel</button></td>
+                      -->
+
+
+                      </tr>
+                      <tr class="spacer"><td colspan="100"></td></tr>
+        
+                     
+            </tbody>
+            </table>
+            </div>
+          </div>
+
+
+          <ng-template #content let-modal>
+            <div class="modal-header">
+              <h4 class="modal-title" id="modal-basic-title">Book an appointment</h4>
+              <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+            </div>
+            <div class="modal-body">
+          
+          <section class=" gradient-custom">
+              <div class="container" >
+                <div class="row justify-content-center align-items-center h-100">
+                  <div class="">
+
+                    <form  [formGroup]="form" (ngSubmit)="onSubmit()" action="#">
+  
+                      <div class="row">
+                        <div class="col-md-6 mb-4">
+        
+                          <div class="form-outline">
+                            <input type="text" id="serviceType" class="form-control form-control-lg" formControlName="serviceType"  name="serviceType" id="serviceType" placeholder="" ngModel/>
+                            <label class="form-label" for="serviceType">Service Type</label>
+                          </div>
+        
+                        </div>
+                        <div class="col-md-6 mb-4">
+        
+                          <div class="form-outline">
+                            <input type="text"  class="form-control form-control-lg" formControlName="description"  name="description" id="description" placeholder="" ngModel/>
+                            <label class="form-label" for="description">Description</label>
+                          </div>
+        
+                        </div>
+                      </div>
+        
+                      <div class="row">
+                        <div class="col-md-6 mb-4 d-flex align-items-center">
+        
+                          <div class="form-outline datepicker w-100">
+                            <input type="date" class="form-control form-control-lg"  formControlName="appointDate"  name="appointDate" id="appointDate" placeholder="" ngModel/>
+                            <label for="appointDate" class="form-label">Date</label>
+                          </div>
+        
+                        </div>
+                        <div class="col-md-6 mb-4 d-flex align-items-center">
+        
+                          <div class="form-outline datepicker w-100">
+                            <input type="number"  class="form-control form-control-lg" formControlName="appointTime"   name="appointTime" id="appointTime" min="8" max="17" value="8" ngModel/>
+                            <label for="time" class="form-label">Time</label>
+                          </div>
+        
+                        </div>
+                      </div>
+        
+                      <div class="row">
+      
+                        <div class="col-md-6 mb-4 pb-2">
+        
+                          <div class="form-outline">
+      
+                          <select class="form-select form-select-lg" formControlName="barberId" [ngModel]="barberId" ngModel>
+                          <option value="{{barber.barberId}}" *ngFor="let barber of barber">{{barber.firstName}}</option>
+                          </select>
+                          </div>
+        
+                        </div>
+                        <div class="col-md-6 mb-4 pb-2">
+        
+                          <div class="form-outline">
+                          <input type="number"  class="form-control form-control-lg" formControlName="custId" [ngModel]="custId" value="{{custId}}" placeholder="" readonly  ngModel/>
+                            
+                          </div>
+        
+                        </div>
+                      </div>
+        
+                  
+
+        <B>{{result}}</B>
+                    </form>
+                      </div>
+                    </div>
+                  </div>
+          
+              
+            </section>
+          </div>
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-outline-dark"  (click)="[onSubmit(),modal.close('Save click')]">Save</button>
+          </div>
+          </ng-template>
+          
+          
+          <hr>
+          
+          <pre>{{ closeResult }}</pre>
+
+          <!-- --------------------DELETE MODAL---------------------------- -->
+
+
+          <ng-template #delete1 let-modal>
+            <div class="modal-header">
+              <h6 class="modal-title" id="modal-basic-title">Are you sure you want to delete this appointment?</h6>
+              <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+            </div>
+            <div class="modal-body">
+              id:<input style="border: none;outline:none" id="myid">
+            </div>
+            {{delResponse}}
+            <div class="modal-footer">
+
+              <button id="" type="button" class="btn btn-outline-dark" (click)="[delete()]">Delete</button>
+              <button id="" type="button" class="btn btn-outline-dark" (click)="[modal.close('Save click'),close()]">Close</button>
+            </div>
+          </ng-template>
+
+          <!-- ----------------------------UPDATE MODAL------------------ -->
+
+
+          <ng-template #updateModal let-modal>
+            <div class="modal-header">
+              <h4 class="modal-title" id="modal-basic-title">Update your appointment</h4>
+              <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+            </div>
+            <div class="modal-body">
+          
+          <section class=" gradient-custom">
+              <div class="container" >
+                <div class="row justify-content-center align-items-center h-100">
+                  <div class="">
+                    <form  [formGroup]="form1" (ngSubmit)="onSubmit()" action="#">
+
+                      <div class="row">
+                        <div class="col-md-6 mb-4">
+        
+                          <div class="form-outline">
+                            <input type="text" id="serviceType" [ngModel]="serviceType" class="form-control form-control-lg" formControlName="serviceType"  name="serviceType" id="serviceType" placeholder="" ngModel/>
+                            <label class="form-label" for="serviceType">Service Type</label>
+                          </div>
+        
+                        </div>
+                        <div class="col-md-6 mb-4">
+        
+                          <div class="form-outline">
+                            <input type="text" [ngModel]="description"  class="form-control form-control-lg" formControlName="description"  name="description" id="description" [ngModel]="description"  placeholder="" ngModel/>
+                            <label class="form-label" for="description">Description</label>
+                          </div>
+        
+                        </div>
+                      </div>
+        
+                      <div class="row">
+                        <div class="col-md-6 mb-4 d-flex align-items-center">
+        
+                          <div class="form-outline datepicker w-100">
+                            <input type="text" [ngModel]="appointDate" class="form-control form-control-lg"  formControlName="appointDate"  name="appointDate" id="appointDate"  placeholder="" ngModel/>
+                            <label for="appointDate" class="form-label">Date</label>
+                          </div>
+        
+                        </div>
+                        <div class="col-md-6 mb-4 d-flex align-items-center">
+        
+                          <div class="form-outline datepicker w-100">
+                            <input type="text" [ngModel]="appointTime"  class="form-control form-control-lg" formControlName="appointTime"   name="appointTime" id="appointTime"  ngModel/>
+                            <label for="time" class="form-label">Time</label>
+                          </div>
+        
+                        </div>
+                      </div>
+        
+                      <div class="row">
+        
+                        <div class="col-md-6 mb-4 pb-2">
+        
+                          <div class="form-outline">
+        
+                          <select class="form-select form-select-lg" formControlName="barberId" [ngModel]="barberId" ngModel>
+                          <option value="{{barber.barberId}}" *ngFor="let barber of barber">{{barber.firstName}}</option>
+                          </select>
+                          </div>
+        
+                        </div>
+                        <div class="col-md-6 mb-4 pb-2">
+        
+                          <div class="form-outline">
+                          <input type="number" [ngModel]="custId"  class="form-control form-control-lg" value="{{custId}}" formControlName="custId"  placeholder="" readonly  ngModel/>
+                            
+                          </div>
+        
+                        </div>
+                      </div>
+        
+                  
+
+                        <B>{{result}}</B>
+                    </form>
+                      </div>
+                    </div>
+                  </div>
+          
+              
+            </section>
+          </div>
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-outline-dark"  (click)="[update()]">Update</button>
+            <button type="submit" class="btn btn-outline-dark"  (click)="[modal.close('Save click'),close()]">Close</button>
+          </div>
+          </ng-template>
+          
+          
+          <hr>
+          
+          <pre>{{ closeResult }}</pre>
